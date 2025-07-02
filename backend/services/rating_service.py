@@ -40,7 +40,7 @@ def get_work_ratings_service(db: Session, work_id: int) -> list[RatingRead]:
 def create_rating_service(db: Session, rating: RatingCreate) -> int:
     """Function that creates Rating object
     :param db: database session
-    :param rating: Pydantic Rating object
+    :param rating: Pydantic RatingCreate object
     :return: new Rating object id
     """
     db_rating = Rating(
@@ -72,7 +72,7 @@ def update_rating_service(db: Session, rating_id: int, new_rating: RatingUpdate)
     """Function that changes rating score
     :param db: database session
     :param rating_id: integer id of rating
-    :param new_rating: Pydantic rating object
+    :param new_rating: Pydantic RatingUpdate object
     :return: if success -> {'message': 'success'}; else -> {'error': <error_msg>}
     """
     try:

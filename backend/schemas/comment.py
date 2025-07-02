@@ -34,6 +34,13 @@ class CommentRead(CommentBase):
     }
 
 
+class CommentShort(CommentBase):
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
 class CommentContentUpdate(BaseModel):
     content: str
 

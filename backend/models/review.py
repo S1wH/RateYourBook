@@ -23,7 +23,7 @@ class Review(Base):
     title = Column(String(50), nullable=False)
     review_type = Column(Enum(ReviewType), nullable=False)
     content = Column(Text, nullable=False)
-    is_approved = Column(Boolean, default=True)
+    is_approved = Column(Boolean, default=False)
     is_hidden = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)

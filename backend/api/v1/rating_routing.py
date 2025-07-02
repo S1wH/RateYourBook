@@ -3,7 +3,6 @@ Router for Rating endpoints
 """
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-
 from backend.schemas import RatingCreate, RatingRead, RatingUpdate
 from backend.services.rating_service import (get_user_ratings_service, get_user_work_rating_service,
                                              get_work_ratings_service, create_rating_service, delete_rating_service,
@@ -48,7 +47,7 @@ def get_work_ratings(work_id: int, db: Session = Depends(get_db)) -> list[Rating
 @router.post('/create', status_code=status.HTTP_201_CREATED)
 def create_rating(rating: RatingCreate, db: Session = Depends(get_db)) -> int:
     """Endpoint for create rating request
-    :param rating: Pydantic Rating object
+    :param rating: Pydantic RatingCreate object
     :param db: database session
     :return: integer id of rating
     """
@@ -69,7 +68,7 @@ def delete_rating(rating_id: int, db: Session = Depends(get_db)) -> dict[str, st
 def update_rating(rating_id: int, rating: RatingUpdate, db: Session = Depends(get_db)) -> dict[str, str]:
     """Endpoint for update rating object request
     :param rating_id: integer id of rating
-    :param rating: Pydantic Rating object
+    :param rating: Pydantic RatingUpdate object
     :param db: database session
     :return: if success -> {'message': 'success'}; else -> {'error': <error_msg>}
     """

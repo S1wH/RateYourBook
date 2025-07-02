@@ -10,46 +10,46 @@ def get_user_comments_service(db: Session, user_id: int) -> list[CommentRead]:
     """ Function that returns all comments for a certain user
     :param db: database session
     :param user_id: integer id of user
-    :return: list of PydanticCommentRead model objects
+    :return: list of Pydantic CommentRead model objects
     """
     comments = db.query(Comment).filter_by(user_id=user_id).all()
     return [CommentRead.model_validate(comment) for comment in comments]
 
 
-def get_user_review_comment_service(db: Session, user_id: int, review_id: int) -> CommentRead:
-    """ Function that returns comment of a certain review for a certain user
+def get_user_review_comment_service(db: Session, user_id: int, review_id: int) -> list[CommentRead]:
+    """ Function that returns comments of a certain review for a certain user
     :param db: database session
     :param user_id: integer id of user
     :param review_id: integer id of review
-    :return:  PydanticCommentRead model object
+    :return: list of Pydantic CommentRead model object
     """
-    comment = db.query(Comment).get(user_id=user_id, review_id=review_id)
-    return CommentRead.model_validate(comment)
+    comments = db.query(Comment).filter_by(user_id=user_id, review_id=review_id).all()
+    return [CommentRead.model_validate(comment) for comment in comments]
 
 
 def get_review_comments_service(db: Session, review_id: int) -> list[CommentRead]:
     """ Function that returns all comments of a certain review
     :param db: database session
-    :param review_id: integer id of work
+    :param review_id: integer id of review
     :return: list of Pydantic CommentRead model objects
     """
     comments = db.query(Comment).filter_by(review_id=review_id).all()
     return [CommentRead.model_validate(comment) for comment in comments]
 
 
-def get_user_discussion_comment_service(db: Session, user_id: int, discussion_id: int) -> CommentRead:
-    """ Function that returns comment of a certain review for a certain user
+def get_user_discussion_comment_service(db: Session, user_id: int, discussion_id: int) -> list[CommentRead]:
+    """ Function that returns comments of a certain review for a certain user
     :param db: database session
     :param user_id: integer id of user
-    :param discussion_id: integer id of review
-    :return: Pydantic CommentRead model object
+    :param discussion_id: integer id of discussion
+    :return: list of Pydantic CommentRead model object
     """
-    comment = db.query(Comment).get(user_id=user_id, discussion_id=discussion_id)
-    return CommentRead.model_validate(comment)
+    comments = db.query(Comment).filter_by(user_id=user_id, discussion_id=discussion_id).all()
+    return [CommentRead.model_validate(comment) for comment in comments]
 
 
 def get_discussion_comments_service(db: Session, discussion_id: int) -> list[CommentRead]:
-    """ Function that returns all comments of a certain review
+    """ Function that returns all comments of a certain discussion
     :param db: database session
     :param discussion_id: integer id of discussion
     :return: list of Pydantic CommentRead model objects
@@ -61,7 +61,7 @@ def get_discussion_comments_service(db: Session, discussion_id: int) -> list[Com
 def create_comment_service(db: Session, comment: CommentCreate) -> int:
     """Function that creates Comment object
     :param db: database session
-    :param comment: Pydantic Comment object
+    :param comment: Pydantic CommentCreate object
     :return: new Comment object id
     """
     db_comment = Comment(
@@ -93,7 +93,7 @@ def update_comment_service(db: Session, comment_id: int, new_comment: CommentCon
     """Function that changes comment content
     :param db: database session
     :param comment_id: integer id of comment
-    :param new_comment: Pydantic Comment model object
+    :param new_comment: Pydantic CommentContentUpdate model object
     :return: if success -> {'message': 'success'}; else -> {'error': <error_msg>}
     """
     try:
@@ -106,11 +106,11 @@ def update_comment_service(db: Session, comment_id: int, new_comment: CommentCon
         return {'error': str(e)}
 
 
-def update_visibility_service(db: Session, comment_id, new_comment: CommentVisibilityUpdate) -> dict[str, str]:
+def update_comment_visibility_service(db: Session, comment_id, new_comment: CommentVisibilityUpdate) -> dict[str, str]:
     """Function that changes comment visibility
     :param db: database session
     :param comment_id: integer id of comment
-    :param new_comment: Pydantic Comment model object
+    :param new_comment: Pydantic CommentVisibilityUpdate model object
     :return: if success -> {'message': 'success'}; else -> {'error': <error_msg>}
     """
     try:
