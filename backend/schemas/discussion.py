@@ -29,3 +29,10 @@ class DiscussionRead(DiscussionBase):
 
     class Config:
         orm_mode = True
+
+
+class DiscussionShort(DiscussionBase):
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True

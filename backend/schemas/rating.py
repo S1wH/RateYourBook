@@ -1,15 +1,21 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from . import WorkRead
+from . import WorkShort
 
 
 class RatingBase(BaseModel):
-    value: int = Field(..., ge=1, le=10, description='Оценка от 1 до 10')
+    score: int = Field(..., ge=1, le=10, description='Оценка от 1 до 10')
 
 
 class RatingCreate(RatingBase):
     user_id: int
     book_id: int
+
+    class Config:
+        orm_mode = True
+        model_config = {
+            'from_attributes': True
+        }
 
 
 class RatingRead(RatingBase):
@@ -17,7 +23,19 @@ class RatingRead(RatingBase):
     work_id: int
     user_id: int
     updated_at: datetime
-    work: WorkRead
+    work: WorkShort
 
     class Config:
         orm_mode = True
+        model_config = {
+            'from_attributes': True
+        }
+
+
+class RatingUpdate(RatingBase):
+
+    class Config:
+        orm_mode = True
+        model_config = {
+            'from_attributes': True
+        }

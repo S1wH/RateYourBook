@@ -19,15 +19,18 @@ class WorkCreate(WorkBase):
     pass
 
 
-class WorkRead(WorkBase):
-    title: str
-    author: str
-    description: str
+class WorkShort(WorkBase):
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
+class WorkRead(WorkShort):
     books: list[BookRead]
     reviews: list[ReviewRead]
     ratings: list[RatingRead]
     discussions: list[DiscussionRead]
-    updated_at: datetime
 
     class Config:
         orm_mode = True
