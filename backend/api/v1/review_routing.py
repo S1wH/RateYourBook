@@ -45,13 +45,13 @@ def get_work_reviews(work_id: int, db: Session = Depends(get_db)) -> list[Review
 
 
 @router.post('/create', status_code=status.HTTP_201_CREATED)
-def create_review(comment: ReviewCreate, db: Session = Depends(get_db)) -> int:
+def create_review(review: ReviewCreate, db: Session = Depends(get_db)) -> int:
     """Endpoint for create review object request
-    :param comment: Pydantic ReviewCreate model object
+    :param review: Pydantic ReviewCreate model object
     :param db: database session
     :return: integer id of review
     """
-    return create_review_service(db, comment)
+    return create_review_service(db, review)
 
 
 @router.delete('/delete/{review_id}', status_code=status.HTTP_204_NO_CONTENT)

@@ -11,31 +11,31 @@ class RatingCreate(RatingBase):
     user_id: int
     book_id: int
 
-    class Config:
-        orm_mode = True
-        model_config = {
-            'from_attributes': True
-        }
+    model_config = {
+        "from_attributes": True
+    }
 
 
-class RatingRead(RatingBase):
-    id: int
+class RatingShort(RatingBase):
     work_id: int
     user_id: int
     updated_at: datetime
+
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class RatingRead(RatingShort):
     work: WorkShort
 
-    class Config:
-        orm_mode = True
-        model_config = {
-            'from_attributes': True
-        }
+    model_config = {
+        "from_attributes": True
+    }
 
 
 class RatingUpdate(RatingBase):
 
-    class Config:
-        orm_mode = True
-        model_config = {
-            'from_attributes': True
-        }
+    model_config = {
+        "from_attributes": True
+    }

@@ -20,19 +20,25 @@ class DiscussionCreate(DiscussionBase):
         if 20 > len(title) > 255:
             raise ValueError(f'{title} has incorrect length {len(title)}')
 
-
-class DiscussionRead(DiscussionBase):
-    creator: UserEveryoneRead
-    work: WorkRead
-    comments: Optional[list[CommentRead]]
-    updated_at: datetime
-
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 
 class DiscussionShort(DiscussionBase):
     updated_at: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class DiscussionRead(DiscussionShort):
+    creator: UserEveryoneRead
+    work: WorkRead
+    comments: Optional[list[CommentRead]]
+
+    model_config = {
+        "from_attributes": True
+    }
+

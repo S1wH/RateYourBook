@@ -1,28 +1,34 @@
-from .rating import RatingRead, RatingCreate, RatingUpdate
-from .work import WorkRead, WorkCreate, WorkShort
-from .book import BookRead, BookCreate
-from .discussion import DiscussionRead, DiscussionCreate, DiscussionShort
-from .comment import CommentShort, CommentRead, CommentCreate, CommentContentUpdate, CommentVisibilityUpdate
-from .review import ReviewRead, ReviewCreate, ReviewContentUpdate, ReviewVisibilityUpdate
+from .rating import RatingRead, RatingShort,  RatingCreate, RatingUpdate
+from .work import WorkRead, WorkShort, WorkCreate, WorkUpdate
+from .book import BookRead, BookShort, BookCreate, BookUpdate, BookChangeApproveStatus
+from .discussion import DiscussionRead, DiscussionShort, DiscussionCreate
+from .comment import CommentRead, CommentShort, CommentCreate, CommentContentUpdate, CommentVisibilityUpdate
+from .review import ReviewRead, ReviewShort, ReviewCreate, ReviewContentUpdate, ReviewVisibilityUpdate
 from .user import UserSelfRead, UserEveryoneRead, UserCreate
 from .user_book import UserWorkRead, UserWorkCreate
+from .author import AuthorRead, AuthorCreate, AuthorShort
 
 
 __all__ = [
     'RatingRead',
+    'RatingShort',
     'RatingCreate',
     'RatingUpdate',
 
     'WorkRead',
     'WorkShort',
     'WorkCreate',
+    'WorkUpdate',
 
     'BookRead',
+    'BookShort',
     'BookCreate',
+    'BookUpdate',
+    'BookChangeApproveStatus',
 
     'DiscussionRead',
-    'DiscussionCreate',
     'DiscussionShort',
+    'DiscussionCreate',
 
     'CommentRead',
     'CommentShort',
@@ -31,6 +37,7 @@ __all__ = [
     'CommentVisibilityUpdate',
 
     'ReviewRead',
+    'ReviewShort',
     'ReviewCreate',
     'ReviewContentUpdate',
     'ReviewVisibilityUpdate',
@@ -40,5 +47,9 @@ __all__ = [
     'UserCreate',
 
     'UserWorkRead',
-    'UserWorkCreate'
+    'UserWorkCreate',
+
+    'AuthorRead',
+    'AuthorShort',
+    'AuthorCreate',
 ]

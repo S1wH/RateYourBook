@@ -12,7 +12,7 @@ class ReviewBase(BaseModel):
     @field_validator('title')
     def title_validator(self, title):
         if 20 > len(title) > 255:
-            raise ValueError(f'{title} has incorrect length {len(title)}')
+            raise ValueError(f'Title {title} has incorrect length {len(title)}')
 
     @field_validator('content')
     def content_validator(self, content):
@@ -31,12 +31,19 @@ class ReviewCreate(ReviewBase):
     }
 
 
-class ReviewRead(ReviewBase):
+class ReviewShort(BaseModel):
     is_approved: bool
+    updated_at: datetime
+
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class ReviewRead(ReviewShort):
     user: UserEveryoneRead
     work: WorkShort
     comments: list[CommentShort]
-    updated_at: datetime
 
     model_config = {
         "from_attributes": True

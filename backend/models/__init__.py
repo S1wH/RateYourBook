@@ -7,6 +7,7 @@ from .book import Book, Work
 from .review import Review, Comment
 from .rating import Rating
 from .discussion import Discussion
+from .author import Author
 
 
 __all__ = [
@@ -19,4 +20,5 @@ __all__ = [
     'Rating',
     'Comment',
     'Discussion',
+    'Author',
 ]

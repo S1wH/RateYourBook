@@ -1,7 +1,7 @@
 from pydantic import BaseModel, field_validator
 from typing import Optional
 from datetime import datetime
-from . import WorkRead
+from . import WorkShort
 
 
 class BookBase(BaseModel):
@@ -36,11 +36,39 @@ class BookCreate(BookBase):
     work_id: int
     added_by: int
 
+    model_config = {
+        "from_attributes": True
+    }
 
-class BookRead(BookBase):
+
+class BookShort(BookBase):
     is_approved: bool
     updated_at: datetime
-    work: WorkRead
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class BookRead(BookShort):
+    work: WorkShort
+
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class BookUpdate(BookBase):
+    work_id: int
+
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class BookChangeApproveStatus(BaseModel):
+    is_approved: bool
+
+    model_config = {
+        "from_attributes": True
+    }
