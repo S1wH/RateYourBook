@@ -156,7 +156,7 @@ def delete_work_service(db: Session, work_id: int) -> dict[str, str]:
     """Function that deletes Work object
     :param db: database session
     :param work_id: integer id of work
-    :return:
+    :return: if success -> {'message': 'success'}; else -> {'error': <error_msg>}
     """
     try:
         work = db.get(Work, work_id)
