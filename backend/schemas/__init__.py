@@ -4,7 +4,7 @@ from .book import BookRead, BookShort, BookCreate, BookUpdate, BookChangeApprove
 from .discussion import DiscussionRead, DiscussionShort, DiscussionCreate
 from .comment import CommentRead, CommentShort, CommentCreate, CommentContentUpdate, CommentVisibilityUpdate
 from .review import ReviewRead, ReviewShort, ReviewCreate, ReviewContentUpdate, ReviewVisibilityUpdate
-from .user import UserSelfRead, UserEveryoneRead, UserCreate
+from .user import UserSelfRead, UserEveryoneRead, UserCreate, UserLogin
 from .user_book import UserWorkRead, UserWorkCreate
 from .author import AuthorRead, AuthorCreate, AuthorShort
 
@@ -45,6 +45,7 @@ __all__ = [
     'UserSelfRead',
     'UserEveryoneRead',
     'UserCreate',
+    'UserLogin',
 
     'UserWorkRead',
     'UserWorkCreate',

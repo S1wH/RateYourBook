@@ -4,7 +4,7 @@ Main config for backend service
 from pydantic_settings import BaseSettings
 
 
-class Settings(BaseSettings):
+class PostgresSettings(BaseSettings):
     """
     Base settings Pydantic class with postgres connection params
     """
@@ -30,4 +30,20 @@ class Settings(BaseSettings):
     }
 
 
-settings = Settings()
+class AppSettings(BaseSettings):
+    """
+    Base settings Pydantic class with app params
+    """
+    secret_key: str
+    access_token_expire_minutes: int
+    refresh_token_expire_days: int
+    algorithm: str
+
+    model_config = {
+        "env_file": ".env",
+        "from_attributes": True,
+    }
+
+
+postgres_settings = PostgresSettings()
+app_settings = AppSettings()

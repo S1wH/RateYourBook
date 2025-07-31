@@ -17,10 +17,14 @@ class UserBase(BaseModel):
             raise ValueError(f'ISBN {username} has incorrect length {len(username)}')
 
 
-class UserCreate(UserBase):
+class UserCreate(BaseModel):
     email: str
     password1: str
     password2: str
+
+    model_config = {
+        "from_attributes": True
+    }
 
     @model_validator(mode='after')
     def creation_data_validator(self):
@@ -31,19 +35,30 @@ class UserCreate(UserBase):
             raise ValueError(f'Passed both review {self.review_id} and discussion {self.discussion_id}')
 
 
+class UserLogin(BaseModel):
+    login: str
+    password: str
+
+    model_config = {
+        "from_attributes": True
+    }
+
+
 class UserEveryoneRead(UserBase):
     reviews: list[ReviewRead]
     ratings: list[RatingRead]
     discussions: list[DiscussionRead]
     created_at: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 
 class UserSelfRead(UserEveryoneRead):
     email: str
     comments: list[CommentRead]
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
