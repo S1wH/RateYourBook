@@ -39,3 +39,10 @@ class AuthorRead(AuthorCreate):
     model_config = {
         "from_attributes": True
     }
+
+
+class AuthorUpdate(AuthorBase):
+
+    model_config = {
+        "from_attributes": True
+    }

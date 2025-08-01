@@ -2,9 +2,12 @@
 Utils module for auth methods
 """
 import jwt
+from typing import Optional
 from fastapi import HTTPException
-from passlib.context import CryptContext
 from datetime import datetime, timedelta
+from passlib.context import CryptContext
+from sqlalchemy.orm import Session
+from backend.models import User
 from backend.core.config import app_settings
 
 
@@ -72,3 +75,32 @@ class AuthUtilsHelper:
             raise HTTPException(status_code=401, detail='Token has expired')
         except jwt.InvalidTokenError:
             raise HTTPException(status_code=401, detail='Invalid token')
+
+    @staticmethod
+    def get_current_user(token: str, db: Session) -> User:
+        """Get current user from JWT token
+        :param token: JWT access token
+        :param db: database session
+        :return: User model object
+        :raises HTTPException: if token is invalid or user not found
+        """
+        payload = AuthUtilsHelper.decode_token(token)
+        if payload['type'] != 'access':
+            raise HTTPException(status_code=401, detail='Invalid token type')
+        user = db.query(User).get(id=int(payload['sub']))
+        if not user:
+            raise HTTPException(status_code=401, detail='User not found')
+        return user
+
+    @staticmethod
+    def authenticate_user(db: Session, login: str, password: str) -> Optional[User]:
+        """Authenticate user by login (email or username) and password
+        :param password: user's hashed password
+        :param db: database session
+        :param login: user's login
+        :return: User model object if authenticated, None otherwise
+        """
+        user = db.query(User).filter((User.email == login) | (User.username == login)).first()
+        if not user or not AuthUtilsHelper.verify_password(password, user.password):
+            return None
+        return user

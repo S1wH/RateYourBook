@@ -13,7 +13,7 @@ from backend.db.session import get_db
 router = APIRouter()
 
 
-@router.get("/user/{user_id}", status_code=status.HTTP_200_OK, response_model=list[RatingRead])
+@router.get('/user/{user_id}', status_code=status.HTTP_200_OK, response_model=list[RatingRead])
 def get_user_ratings(user_id: int, db: Session = Depends(get_db)) -> list[RatingRead]:
     """Endpoint for get all user's ratings request
     :param user_id: integer id of user

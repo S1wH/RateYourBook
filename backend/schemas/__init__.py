@@ -6,7 +6,7 @@ from .comment import CommentRead, CommentShort, CommentCreate, CommentContentUpd
 from .review import ReviewRead, ReviewShort, ReviewCreate, ReviewContentUpdate, ReviewVisibilityUpdate
 from .user import UserSelfRead, UserEveryoneRead, UserCreate, UserLogin
 from .user_book import UserWorkRead, UserWorkCreate
-from .author import AuthorRead, AuthorCreate, AuthorShort
+from .author import AuthorRead, AuthorCreate, AuthorShort, AuthorUpdate
 
 
 __all__ = [
@@ -53,4 +53,5 @@ __all__ = [
     'AuthorRead',
     'AuthorShort',
     'AuthorCreate',
+    'AuthorUpdate',
 ]

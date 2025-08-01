@@ -1,41 +1,13 @@
 """
 Business logic for User authentication
 """
-from typing import Union, Optional
+from typing import Union
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, Response
 from fastapi.security import HTTPAuthorizationCredentials
 from backend.models import User
 from backend.schemas import UserCreate, UserLogin, UserSelfRead, UserEveryoneRead
 from backend.utils import AuthUtilsHelper
-
-
-def get_current_user_service(token: str, db: Session) -> User:
-    """Get current user from JWT token
-    :param token: JWT access token
-    :param db: database session
-    :return: User model object
-    :raises HTTPException: if token is invalid or user not found
-    """
-    payload = AuthUtilsHelper.decode_token(token)
-    if payload['type'] != 'access':
-        raise HTTPException(status_code=401, detail='Invalid token type')
-    user = db.query(User).get(id=int(payload['sub']))
-    if not user:
-        raise HTTPException(status_code=401, detail='User not found')
-    return user
-
-
-def authenticate_user_service(db: Session, login: UserLogin) -> Optional[User]:
-    """Authenticate user by login (email or username) and password
-    :param db: database session
-    :param login: Pydantic UserLogin object
-    :return: User model object if authenticated, None otherwise
-    """
-    user = db.query(User).filter((User.email == login.login) | (User.username == login.login)).first()
-    if not user or not AuthUtilsHelper.verify_password(login.password, user.password):
-        return None
-    return user
 
 
 def get_user_service(db: Session, user_id: int, credentials: HTTPAuthorizationCredentials
@@ -47,7 +19,7 @@ def get_user_service(db: Session, user_id: int, credentials: HTTPAuthorizationCr
     :return: Pydantic UserSelfRead or UserEveryoneRead model object
     :raises: HTTPException: if no user was found
     """
-    current_user = get_current_user_service(credentials.credentials, db)
+    current_user = AuthUtilsHelper.get_current_user(credentials.credentials, db)
     user = db.query(User).get(user_id=user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail='User not found')
@@ -92,7 +64,7 @@ def login_service(db: Session, response: Response, user: UserLogin) -> dict[str,
     :return: if success -> {'message': 'success', 'access_token': <token>}
     :raises: HTTPException: if no user was found
     """
-    db_user = authenticate_user_service(db, user)
+    db_user = AuthUtilsHelper.authenticate_user(db, user.login, user.password)
     if not db_user:
         raise HTTPException(status_code=401, detail='Invalid credentials')
 
