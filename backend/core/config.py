@@ -1,7 +1,12 @@
 """
 Main config for backend service
 """
+import os
 from pydantic_settings import BaseSettings
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 class PostgresSettings(BaseSettings):
@@ -27,6 +32,7 @@ class PostgresSettings(BaseSettings):
     model_config = {
         "env_file": ".env",
         "from_attributes": True,
+        'extra': 'ignore'
     }
 
 
@@ -42,8 +48,10 @@ class AppSettings(BaseSettings):
     model_config = {
         "env_file": ".env",
         "from_attributes": True,
+        'extra': 'ignore',
     }
 
 
 postgres_settings = PostgresSettings()
+
 app_settings = AppSettings()

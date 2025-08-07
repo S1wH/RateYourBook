@@ -2,9 +2,9 @@
 Business logic for Book and Work db models
 """
 from sqlalchemy.orm import Session
-from backend.schemas import (BookRead, BookCreate, BookUpdate, BookChangeApproveStatus,
-                             WorkRead, WorkCreate, WorkUpdate)
-from backend.models import Book, Work
+from schemas import (BookRead, BookCreate, BookUpdate, BookChangeApproveStatus,
+                     WorkRead, WorkCreate, WorkUpdate)
+from models import Book, Work
 
 
 def get_certain_book_service(db: Session, book_id: int) -> BookRead:

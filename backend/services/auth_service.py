@@ -5,9 +5,9 @@ from typing import Union
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, Response
 from fastapi.security import HTTPAuthorizationCredentials
-from backend.models import User
-from backend.schemas import UserCreate, UserLogin, UserSelfRead, UserEveryoneRead
-from backend.utils import AuthUtilsHelper
+from models import User
+from schemas import UserCreate, UserLogin, UserSelfRead, UserEveryoneRead
+from utils import AuthUtilsHelper
 
 
 def get_user_service(db: Session, user_id: int, credentials: HTTPAuthorizationCredentials

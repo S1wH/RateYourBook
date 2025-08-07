@@ -2,8 +2,8 @@
 Business logic for Rating db model
 """
 from sqlalchemy.orm import Session
-from backend.models import Rating
-from backend.schemas import RatingRead, RatingCreate, RatingUpdate
+from models import Rating
+from schemas import RatingRead, RatingCreate, RatingUpdate
 
 
 def get_user_ratings_service(db: Session, user_id: int) -> list[RatingRead]:

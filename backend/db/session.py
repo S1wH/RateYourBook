@@ -4,12 +4,11 @@ Module that provides connection data and engine for database
 from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
-from backend.core.config import postgres_settings
+from core.config import postgres_settings
 
 
-DATABASE_URL = (f'postgresql://postgres:{postgres_settings.postgres_password}@'
-                f'{postgres_settings.postgres_host}:{postgres_settings.postgres_port}/{postgres_settings.postgres_db}')
-engine = create_engine(DATABASE_URL, connect_args={'check_same_thread': False})
+DATABASE_URL = postgres_settings.database_url
+engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

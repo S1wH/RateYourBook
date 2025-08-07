@@ -7,8 +7,8 @@ from fastapi import HTTPException
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
-from backend.models import User
-from backend.core.config import app_settings
+from models import User
+from core.config import app_settings
 
 
 SECRET_KEY = app_settings.secret_key

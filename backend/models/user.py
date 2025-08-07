@@ -26,7 +26,8 @@ class User(Base):
     ratings = relationship('Rating', back_populates='user')
     comments = relationship('Comment', back_populates='user')
     discussions = relationship('Discussion', back_populates='creator')
-    user_works = relationship('UserWorks', back_populates='user')
+    user_works = relationship('UserWork', back_populates='user')
+    added_books = relationship('Book', back_populates='added_by')
 
     __table_args__ = (
         Index('ix_users_username', 'username'),
@@ -38,7 +39,7 @@ class UserWork(Base):
     """
     SqlAlchemy UserWork class
     """
-    __tablename__ = 'user_books'
+    __tablename__ = 'user_works'
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)

@@ -2,8 +2,8 @@
 Business logic for Review db model
 """
 from sqlalchemy.orm import Session
-from backend.models import Review
-from backend.schemas import ReviewRead, ReviewCreate, ReviewContentUpdate, ReviewVisibilityUpdate
+from models import Review
+from schemas import ReviewRead, ReviewCreate, ReviewContentUpdate, ReviewVisibilityUpdate
 
 
 def get_user_reviews_service(db: Session, user_id: int) -> list[ReviewRead]:

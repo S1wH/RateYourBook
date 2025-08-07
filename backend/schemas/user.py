@@ -2,7 +2,6 @@ import re
 from pydantic import BaseModel, field_validator, model_validator
 from typing import Optional
 from datetime import datetime
-from . import RatingRead, CommentRead, ReviewRead, DiscussionRead
 
 
 
@@ -12,9 +11,10 @@ class UserBase(BaseModel):
     avatar_url: Optional[str]
 
     @field_validator('username')
-    def username_validator(self, username):
+    def username_validator(cls, username):
         if 4 > len(username) > 13:
             raise ValueError(f'ISBN {username} has incorrect length {len(username)}')
+        return username
 
 
 class UserCreate(BaseModel):
@@ -45,9 +45,9 @@ class UserLogin(BaseModel):
 
 
 class UserEveryoneRead(UserBase):
-    reviews: list[ReviewRead]
-    ratings: list[RatingRead]
-    discussions: list[DiscussionRead]
+    reviews: list['ReviewRead']
+    ratings: list['RatingRead']
+    discussions: list['DiscussionRead']
     created_at: datetime
 
     model_config = {
@@ -57,7 +57,7 @@ class UserEveryoneRead(UserBase):
 
 class UserSelfRead(UserEveryoneRead):
     email: str
-    comments: list[CommentRead]
+    comments: list['CommentRead']
 
     model_config = {
         "from_attributes": True

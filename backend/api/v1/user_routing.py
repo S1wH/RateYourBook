@@ -5,10 +5,9 @@ from fastapi import APIRouter, Depends, Response, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from typing import Union
 from sqlalchemy.orm import Session
-from backend.db.session import get_db
-from backend.schemas import UserSelfRead, UserEveryoneRead, UserCreate, UserLogin
-from backend.services.auth_service import (get_user_service, create_user_service, login_service, logout_service,
-                                           refresh_token_service)
+from db.session import get_db
+from schemas import UserSelfRead, UserEveryoneRead, UserCreate, UserLogin
+from services.auth_service import get_user_service, create_user_service, login_service, logout_service, refresh_token_service
 
 
 router = APIRouter()

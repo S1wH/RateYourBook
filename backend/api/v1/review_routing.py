@@ -3,11 +3,11 @@ Router for Review endpoints
 """
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-from backend.schemas import ReviewCreate, ReviewRead, ReviewContentUpdate, ReviewVisibilityUpdate
-from backend.services.review_service import (get_user_reviews_service, get_user_work_reviews_service,
-                                             get_work_reviews_service, create_review_service, delete_review_service,
-                                             update_review_service, update_review_visibility_service)
-from backend.db.session import get_db
+from schemas import ReviewCreate, ReviewRead, ReviewContentUpdate, ReviewVisibilityUpdate
+from services.review_service import (get_user_reviews_service, get_user_work_reviews_service,
+                                     get_work_reviews_service, create_review_service, delete_review_service,
+                                     update_review_service, update_review_visibility_service)
+from db.session import get_db
 
 
 router = APIRouter()
@@ -55,7 +55,7 @@ def create_review(review: ReviewCreate, db: Session = Depends(get_db)) -> int:
 
 
 @router.delete('/delete/{review_id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete_comment(review_id: int, db: Session = Depends(get_db)) -> dict[str, str]:
+def delete_comment(review_id: int, db: Session = Depends(get_db)) -> None:
     """Endpoint for delete review object request
     :param review_id: integer id of review
     :param db: database session

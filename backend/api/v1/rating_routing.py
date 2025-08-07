@@ -3,11 +3,11 @@ Router for Rating endpoints
 """
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-from backend.schemas import RatingCreate, RatingRead, RatingUpdate
-from backend.services.rating_service import (get_user_ratings_service, get_user_work_rating_service,
-                                             get_work_ratings_service, create_rating_service, delete_rating_service,
-                                             update_rating_service)
-from backend.db.session import get_db
+from schemas import RatingCreate, RatingRead, RatingUpdate
+from services.rating_service import (get_user_ratings_service, get_user_work_rating_service,
+                                     get_work_ratings_service, create_rating_service, delete_rating_service,
+                                     update_rating_service)
+from db.session import get_db
 
 
 router = APIRouter()
@@ -55,7 +55,7 @@ def create_rating(rating: RatingCreate, db: Session = Depends(get_db)) -> int:
 
 
 @router.delete('/delete/{rating_id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete_rating(rating_id: int, db: Session = Depends(get_db)) -> dict[str, str]:
+def delete_rating(rating_id: int, db: Session = Depends(get_db)) -> None:
     """Endpoint for delete rating object request
     :param rating_id: integer id of rating
     :param db: database session

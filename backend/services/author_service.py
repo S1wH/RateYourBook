@@ -2,8 +2,8 @@
 Business logic for Author db model
 """
 from sqlalchemy.orm import Session
-from backend.schemas import AuthorRead, AuthorCreate, AuthorUpdate
-from backend.models import Author
+from schemas import AuthorRead, AuthorCreate, AuthorUpdate
+from models import Author
 
 
 def get_author_service(db: Session, author_id: int) -> AuthorRead:

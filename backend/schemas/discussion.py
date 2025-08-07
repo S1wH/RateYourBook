@@ -1,7 +1,6 @@
 from pydantic import BaseModel, field_validator
 from typing import Optional
 from datetime import datetime
-from . import WorkRead, UserEveryoneRead, CommentRead
 
 
 class DiscussionBase(BaseModel):
@@ -16,9 +15,10 @@ class DiscussionCreate(DiscussionBase):
     work_id: int
 
     @field_validator('title')
-    def title_validator(self, title):
+    def title_validator(cls, title):
         if 20 > len(title) > 255:
             raise ValueError(f'{title} has incorrect length {len(title)}')
+        return title
 
     model_config = {
         "from_attributes": True
@@ -34,9 +34,9 @@ class DiscussionShort(DiscussionBase):
 
 
 class DiscussionRead(DiscussionShort):
-    creator: UserEveryoneRead
-    work: WorkRead
-    comments: Optional[list[CommentRead]]
+    creator: 'UserEveryoneRead'
+    work: 'WorkRead'
+    comments: Optional[list['CommentRead']]
 
     model_config = {
         "from_attributes": True

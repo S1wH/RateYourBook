@@ -1,7 +1,6 @@
 from pydantic import BaseModel, model_validator
 from typing import Optional
 from datetime import datetime
-from . import DiscussionShort, WorkShort, UserEveryoneRead
 
 
 class CommentBase(BaseModel):
@@ -24,9 +23,9 @@ class CommentCreate(CommentBase):
 
 
 class CommentRead(CommentBase):
-    user: UserEveryoneRead
-    review: WorkShort
-    discussion: DiscussionShort
+    user: 'UserEveryoneRead'
+    review: 'WorkShort'
+    discussion: 'DiscussionShort'
     updated_at: datetime
 
     model_config = {
@@ -37,8 +36,10 @@ class CommentRead(CommentBase):
 class CommentShort(CommentBase):
     updated_at: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
+
 
 
 class CommentContentUpdate(BaseModel):

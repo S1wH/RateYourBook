@@ -3,10 +3,10 @@ Router for Author endpoints
 """
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-from backend.schemas import AuthorRead, AuthorCreate, AuthorUpdate
-from backend.services.author_service import (get_author_service, get_authors_service, create_author_service,
+from schemas import AuthorRead, AuthorCreate, AuthorUpdate
+from services.author_service import (get_author_service, get_authors_service, create_author_service,
                                              delete_author_service, update_author_service)
-from backend.db.session import get_db
+from db.session import get_db
 
 
 router = APIRouter()
@@ -42,7 +42,7 @@ def create_author(author: AuthorCreate, db: Session = Depends(get_db)) -> int:
 
 
 @router.delete('/delete/{author_id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete_author(author_id: int, db: Session = Depends(get_db)) -> dict[str, str]:
+def delete_author(author_id: int, db: Session = Depends(get_db)) -> None:
     """Endpoint for delete author object request
     :param author_id: integer id of author
     :param db: database session

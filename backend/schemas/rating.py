@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from . import WorkShort
 
 
 class RatingBase(BaseModel):
@@ -27,7 +26,7 @@ class RatingShort(RatingBase):
 
 
 class RatingRead(RatingShort):
-    work: WorkShort
+    work: 'WorkShort'
 
     model_config = {
         "from_attributes": True

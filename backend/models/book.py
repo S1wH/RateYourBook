@@ -24,9 +24,10 @@ class Book(Base):
     is_approved = Column(Boolean, default=False)
 
     work_id = Column(Integer, ForeignKey('works.id'), nullable=False)
-    added_by = Column(Integer, ForeignKey('users.id'), nullable=False)
+    added_by_id = Column(Integer, ForeignKey('users.id'), nullable=False)
 
     work = relationship('Work', back_populates='books')
+    added_by = relationship('User', back_populates='added_books')
 
     __table_args__ = (
         Index('ix_books_title', 'title'),
@@ -49,11 +50,12 @@ class Work(Base):
 
     author_id = Column(Integer, ForeignKey('authors.id'), nullable=False)
 
+    author = relationship('Author', back_populates='works')
     books = relationship('Book', back_populates='work')
     reviews = relationship('Review', back_populates='work')
     ratings = relationship('Rating', back_populates='work')
     discussions = relationship('Discussion', back_populates='work')
-    user_books = relationship('UserWorks', back_populates='work')
+    user_works = relationship('UserWork', back_populates='work')
 
     __table_args__ = (
         Index('ix_works_title', 'title'),

@@ -1,7 +1,6 @@
 from pydantic import BaseModel, field_validator
 from typing import Optional
 from datetime import datetime
-from . import WorkShort
 
 
 class BookBase(BaseModel):
@@ -12,24 +11,28 @@ class BookBase(BaseModel):
     language: str
 
     @field_validator('isbn')
-    def isbn_validator(self, isbn):
+    def isbn_validator(cls, isbn):
         if isbn and len(isbn) > 13:
             raise ValueError(f'ISBN {isbn} has incorrect length {len(isbn)}')
+        return isbn
 
     @field_validator('title')
-    def title_validator(self, title):
+    def title_validator(cls, title):
         if 20 > len(title) > 255:
             raise ValueError(f'Title {title} has incorrect length {len(title)}')
+        return title
 
     @field_validator('publisher')
-    def publisher_validator(self, publisher):
+    def publisher_validator(cls, publisher):
         if len(publisher) > 100:
             raise ValueError(f'Publisher {publisher} has incorrect length {len(publisher)}')
+        return publisher
 
     @field_validator('language')
-    def language_validator(self, language):
+    def language_validator(cls, language):
         if len(language) > 50:
             raise ValueError(f'Language {language} has incorrect length {len(language)}')
+        return language
 
 
 class BookCreate(BookBase):
@@ -51,7 +54,7 @@ class BookShort(BookBase):
 
 
 class BookRead(BookShort):
-    work: WorkShort
+    work: 'WorkShort'
 
     model_config = {
         "from_attributes": True

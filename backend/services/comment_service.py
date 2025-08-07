@@ -2,8 +2,8 @@
 Business logic for Comment db model
 """
 from sqlalchemy.orm import Session
-from backend.models import Comment
-from backend.schemas import CommentRead, CommentCreate, CommentContentUpdate, CommentVisibilityUpdate
+from models import Comment
+from schemas import CommentRead, CommentCreate, CommentContentUpdate, CommentVisibilityUpdate
 
 
 def get_user_comments_service(db: Session, user_id: int) -> list[CommentRead]:

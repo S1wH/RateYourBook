@@ -1,7 +1,6 @@
 from pydantic import BaseModel, field_validator
 from datetime import datetime
-from . import WorkShort, UserEveryoneRead, CommentShort
-from backend.models.enums import ReviewType
+from models.enums import ReviewType
 
 
 class ReviewBase(BaseModel):
@@ -10,16 +9,18 @@ class ReviewBase(BaseModel):
     content: str
 
     @field_validator('title')
-    def title_validator(self, title):
+    def title_validator(cls, title):
         if 20 > len(title) > 255:
             raise ValueError(f'Title {title} has incorrect length {len(title)}')
+        return title
 
     @field_validator('content')
-    def content_validator(self, content):
-        if len(content) > 500 and self.review_type == ReviewType.BLITZ:
+    def content_validator(cls, content):
+        if len(content) > 500 and cls.review_type == ReviewType.BLITZ:
             raise ValueError(f'{ReviewType.BLITZ} has incorrect length {len(content)}')
-        if len(content) < 500 and self.review_type == ReviewType.DEEP:
+        if len(content) < 500 and cls.review_type == ReviewType.DEEP:
             raise  ValueError(f'{ReviewType.DEEP} has incorrect length {len(content)}')
+        return content
 
 
 class ReviewCreate(ReviewBase):
@@ -41,9 +42,9 @@ class ReviewShort(BaseModel):
 
 
 class ReviewRead(ReviewShort):
-    user: UserEveryoneRead
-    work: WorkShort
-    comments: list[CommentShort]
+    user: 'UserEveryoneRead'
+    work: 'WorkShort'
+    comments: list['CommentShort']
 
     model_config = {
         "from_attributes": True

@@ -3,13 +3,13 @@ Router for Comment endpoints
 """
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-from backend.schemas import CommentCreate, CommentRead, CommentContentUpdate, CommentVisibilityUpdate
-from backend.services.comment_service import (get_user_comments_service, get_user_review_comment_service,
-                                              get_review_comments_service, get_user_discussion_comment_service,
-                                              get_discussion_comments_service, create_comment_service,
-                                              delete_comment_service, update_comment_service,
-                                              update_comment_visibility_service)
-from backend.db.session import get_db
+from schemas import CommentCreate, CommentRead, CommentContentUpdate, CommentVisibilityUpdate
+from services.comment_service import (get_user_comments_service, get_user_review_comment_service,
+                                      get_review_comments_service, get_user_discussion_comment_service,
+                                      get_discussion_comments_service, create_comment_service,
+                                      delete_comment_service, update_comment_service,
+                                      update_comment_visibility_service)
+from db.session import get_db
 
 
 router = APIRouter()
@@ -78,7 +78,7 @@ def create_comment(comment: CommentCreate, db: Session = Depends(get_db)) -> int
 
 
 @router.delete('/delete/{comment_id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete_comment(comment_id: int, db: Session = Depends(get_db)) -> dict[str, str]:
+def delete_comment(comment_id: int, db: Session = Depends(get_db)) -> None:
     """Endpoint for delete comment object request
     :param comment_id: integer id of comment
     :param db: database session

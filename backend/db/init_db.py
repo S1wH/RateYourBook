@@ -1,8 +1,8 @@
 """
 Script to initialize database models and dependencies
 """
-from backend.db.session import engine
-from backend.models.base import Base
+from db.session import engine
+from models.base import Base
 
 
 def init_db() -> None:

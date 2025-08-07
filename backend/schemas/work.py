@@ -1,7 +1,6 @@
 from pydantic import BaseModel, field_validator
 from typing import Optional
 from datetime import datetime
-from . import RatingShort, BookShort, ReviewShort, DiscussionShort, AuthorShort
 
 
 class WorkBase(BaseModel):
@@ -10,9 +9,10 @@ class WorkBase(BaseModel):
     description: Optional[str]
 
     @field_validator('title')
-    def title_validator(self, title):
-        if 20 > len(title) > 255:
+    def title_validator(cls, title):
+        if len(title) > 255 or len(title) < 1:
             raise ValueError(f'Title {title} has incorrect length {len(title)}')
+        return title
 
 
 class WorkCreate(WorkBase):
@@ -24,7 +24,7 @@ class WorkCreate(WorkBase):
 
 
 class WorkShort(WorkBase):
-    author: AuthorShort
+    author: 'AuthorShort'
     updated_at: datetime
 
     model_config = {
@@ -33,10 +33,10 @@ class WorkShort(WorkBase):
 
 
 class WorkRead(WorkShort):
-    books: list[BookShort]
-    reviews: list[ReviewShort]
-    ratings: list[RatingShort]
-    discussions: list[DiscussionShort]
+    books: list['BookShort']
+    reviews: list['ReviewShort']
+    ratings: list['RatingShort']
+    discussions: list['DiscussionShort']
 
     model_config = {
         "from_attributes": True
